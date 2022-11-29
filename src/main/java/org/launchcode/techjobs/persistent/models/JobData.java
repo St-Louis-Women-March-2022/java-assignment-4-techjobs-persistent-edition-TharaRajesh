@@ -46,13 +46,18 @@ public class JobData extends AbstractEntity{
     }
 
     public static String getFieldValue(Job job, String fieldName){
-        String theValue;
+        String theValue = "";
+        //fieldName name not required(Not search by Name)
         if (fieldName.equals("name")){
             theValue = job.getName();
         } else if (fieldName.equals("employer")){
-            theValue = job.getEmployer().toString();
+            //theValue = job.getEmployer().toString();
+            theValue = job.getEmployer().name.toString();
         } else {
-            theValue = job.getSkills().toString();
+            //theValue = job.getSkills().toString();
+            for (Skill skill : job.getSkills()) {
+                theValue+=skill.name +",";
+            }
         }
 
         return theValue;
