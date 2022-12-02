@@ -1,7 +1,10 @@
 package org.launchcode.techjobs.persistent.controllers;
 
 import org.launchcode.techjobs.persistent.models.Employer;
+import org.launchcode.techjobs.persistent.models.Job;
+import org.launchcode.techjobs.persistent.models.JobData;
 import org.launchcode.techjobs.persistent.models.Skill;
+import org.launchcode.techjobs.persistent.models.data.JobRepository;
 import org.launchcode.techjobs.persistent.models.data.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +21,8 @@ public class SkillController {
 
     @Autowired
     private SkillRepository skillRepository;
-
+    @Autowired
+    private JobRepository jobRepository;
     @GetMapping("")
     public String index(Model model){
         model.addAttribute("title", "Skills");
@@ -46,13 +50,14 @@ public class SkillController {
     @GetMapping("view/{skillId}")
     public String displayViewSkill(Model model, @PathVariable int skillId) {
 
-        Optional optSkill = null;
-//        if (optEmployer.isPresent()) {
-//            Employer employer = (Employer) optEmployer.get();
-//            model.addAttribute("employer", employer);
-//            return "employers/view";
-//        }
-        skillRepository.findById(skillId);
+        Optional optSkill = skillRepository.findById(skillId);
+
+        if (optSkill.isPresent()) {
+            Skill skill = (Skill) optSkill.get();
+            model.addAttribute("skill", skill);
+            return "skills/view";
+        }
+
         return "redirect:";
     }
 }

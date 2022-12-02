@@ -74,14 +74,18 @@ public class JobData extends AbstractEntity{
         String lower_val = value.toLowerCase();
 
         ArrayList<Job> results = new ArrayList<>();
+        String skills = "";
 
         for (Job job : allJobs) {
-
+            skills = "";
+            for (Skill skill : job.getSkills()) {
+                skills+=skill.name +",";
+            }
             if (job.getName().toLowerCase().contains(lower_val)) {
                 results.add(job);
-            } else if (job.getEmployer().toString().toLowerCase().contains(lower_val)) {
+            } else if (job.getEmployer().name.toString().toLowerCase().contains(lower_val)) {
                 results.add(job);
-            } else if (job.getSkills().toString().toLowerCase().contains(lower_val)) {
+            } else if (skills.toLowerCase().contains(lower_val)) {
                 results.add(job);
             } else if (job.toString().toLowerCase().contains(lower_val)) {
                 results.add(job);
